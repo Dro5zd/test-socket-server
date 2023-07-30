@@ -1,16 +1,18 @@
 const express = require('express');
 const http= require('http');
 const {Server} = require('socket.io');
+const cors = require("cors");
 const app = express();
 
 let activeSessions = 0;
 
+app.use(cors({origin: '*'}))
 
 const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: 'https://inventory-dzencode.netlify.app',
+        origin: '*',
         methods: ['GET', 'POST'],
     },
 });

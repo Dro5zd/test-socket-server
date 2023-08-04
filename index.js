@@ -1,14 +1,12 @@
 const express = require('express');
-const http= require('http');
+const http = require('http');
 const {Server} = require('socket.io');
 const cors = require("cors");
-const route = require('./route')
 const app = express();
 
 let activeSessions = 0;
 
 app.use(cors({origin: '*'}))
-app.use(route);
 
 const server = http.createServer(app);
 
@@ -20,11 +18,11 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-    activeSessions+=1;
+    activeSessions += 1;
     io.emit('sessionCountUpdate', activeSessions);
 
     socket.on('disconnect', () => {
-        activeSessions-=1;
+        activeSessions -= 1;
         io.emit('sessionCountUpdate', activeSessions);
     });
 
